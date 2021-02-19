@@ -1,3 +1,0 @@
-# similarity matrix builder
-
-TODO
