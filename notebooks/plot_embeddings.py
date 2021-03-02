@@ -15,6 +15,9 @@ from matplotlib import rcParams
 
 
 # %%
+%matplotlib inline
+
+# %%
 
 def load_embed_and_feat(data_name, root_dir):
     """A function to load embeddings and features for a donor/cell type
@@ -50,14 +53,6 @@ def load_embed_and_feat(data_name, root_dir):
     return df
 
 
-ROOT_DIR = "/scratch/indikar_root/indikar1/shared_data/cstansbu_rotation/b_cell_data/outputs/"
-DATA_NAME = 'D1-M'
-df = load_embed_and_feat(DATA_NAME, ROOT_DIR)
-print(DATA_NAME, df.shape)
-
-# %%
-print(DATA_NAME, df.shape)
-
 # %%
 
 def build_fig(title="", axis_off=False, size=(10, 8), dpi=200, 
@@ -87,16 +82,25 @@ def build_fig(title="", axis_off=False, size=(10, 8), dpi=200,
 
 # %%
 
-_names = ['D1-Na', 'D1-Nb', 'D1-M', 
-              'D2-N', 'D2-M',
-              'D3-N', 'D3-M']
+ROOT_DIR = "/scratch/indikar_root/indikar1/shared_data/cstansbu_rotation/b_cell_data/outputs/"
 
-for KEY in _names:
-    fig = build_fig(y_lab="UMAP-2", x_lab="UMAP-1", title=f'Sample from {KEY} Clusters')
+for dataset in ['D1-Na', 'D1-Nb', 'D1-M',
+                'D2-N', 'D1-M',
+                'D3-N', 'D3-M']:
 
-    sns.scatterplot(x=embeddings[KEY]['UMAP_1'], 
-                    y=embeddings[KEY]['UMAP_2'], 
-                    palette='Set1',
+    df = load_embed_and_feat(dataset, ROOT_DIR)
+    print(dataset, df.shape)
+
+    fig = build_fig(y_lab="UMAP-2", 
+                    x_lab="UMAP-1", 
+                    title=f'Sample from {dataset} Clusters')
+
+    sns.scatterplot(x=df['UMAP_1'], 
+                    y=df['UMAP_2'], 
+                    hue=df['vFamilyName'],
                     alpha=0.5)
+
+    outpath = f"../figures/{dataset}_UMAP_by_Family.png"
+    plt.savefig(outpath, bbox_inches = 'tight')
 
 # %%
