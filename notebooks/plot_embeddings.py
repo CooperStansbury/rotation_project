@@ -46,4 +46,6 @@ for dataset in ['D1-Na', 'D1-Nb', 'D1-M',
     outpath = f"../figures/{dataset}_UMAP_by_Family.png"
     plt.savefig(outpath, bbox_inches = 'tight')
 
+    
+
 # %%
