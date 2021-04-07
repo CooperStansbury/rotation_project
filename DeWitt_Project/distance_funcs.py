@@ -64,3 +64,37 @@ def matrix_levenshtien(sequence_list):
 
     np.fill_diagonal(A, 1)
     return A
+
+
+def decompose_distances(A):
+    """A function to decompose the distance matrix and compute the hard threshold
+    for singular values. 
+
+    Args:
+        - A (np.array): 2D square matrix
+
+    Returns:
+        - results (dict): intermediate results useful for downstream taskss
+    """
+    # center the matrix
+    A_c = A - A.mean()
+
+    # compute the SVD of the centered distance matrix
+    u, s, vt = np.linalg.svd(A_c)
+
+    # find the optimal hard treshold via: 10.1109/TIT.2014.2323359
+    # this is an estimate of the true rank of the matrix A
+    r = 4 / np.sqrt(3) * np.median(s)
+
+    # find the index of the singular values for TSVD
+    # all entries of S >= r can be ignored
+    k = np.sum(np.where(s >= r, 1, 0))
+
+    return {
+        'A_c' : A_c,
+        'u' : u, 
+        's' : s,
+        'vt' : vt,
+        'r' : r,
+        'k' : k,
+    }

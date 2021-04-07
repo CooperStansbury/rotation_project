@@ -54,7 +54,7 @@ def read_file(file_path, usecols=None, sep='\t'):
                     low_memory=False)
 
 
-def get_samples(dirpath, n_sequences=1000, sample_from=0.1):
+def get_samples(dirpath, n_sequences=1000, sample_from=0.2):
     """A function to return a single dataframe
     of randomly sampled sequences.
     
@@ -68,7 +68,7 @@ def get_samples(dirpath, n_sequences=1000, sample_from=0.1):
     n_files = len(file_list)
 
     # oversample and trim
-    samples_per_file = int((n_sequences / n_files) * 1.1)
+    samples_per_file = int((n_sequences / n_files) * 1.3)
 
     df_list = []
 
