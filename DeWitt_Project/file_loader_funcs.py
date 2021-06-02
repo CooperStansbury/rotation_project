@@ -63,29 +63,36 @@ def get_samples(dirpath, n_sequences=1000, sample_from=0.2):
     """
 
     SAMPLE_FROM = int(len(os.listdir(dirpath)) * sample_from)
-    file_list = np.random.choice(os.listdir(dirpath), SAMPLE_FROM, replace=False)
+    
+    print(SAMPLE_FROM)
+    
+#     file_list = np.random.choice(os.listdir(dirpath), SAMPLE_FROM, replace=False)
 
-    n_files = len(file_list)
+#     n_files = len(file_list)
+    
+#     print(n_files)
 
-    # oversample and trim
-    samples_per_file = int((n_sequences / n_files) * 1.3)
+#     # oversample and trim
+#     samples_per_file = int((n_sequences / n_files) * 1.3)
 
-    df_list = []
+#     df_list = []
 
-    for i, file in enumerate(file_list):
-        if not file.endswith('.tsv'):
-            continue # skip non-input tsv files
+#     for i, file in enumerate(file_list):
+#         if not file.endswith('.tsv'):
+#             continue # skip non-input tsv files
 
-        file_path = f"{dirpath}/{file}"
-        tmp_df = read_file(file_path)
+#         file_path = f"{dirpath}/{file}"
+#         print(file_path)
+        
+        
+#         tmp_df = read_file(file_path)
 
-        if samples_per_file < tmp_df.shape[0]:
-            sample = tmp_df.sample(samples_per_file)
-            df_list.append(sample)
+#         if samples_per_file < tmp_df.shape[0]:
+#             sample = tmp_df.sample(samples_per_file)
+#             df_list.append(sample)
 
-
-    df = pd.concat(df_list, ignore_index=True)
-    to_drop = -1* (len(df) - n_sequences)
-    df = df[:to_drop]
-    return df
+#     df = pd.concat(df_list, ignore_index=True)
+#     to_drop = -1* (len(df) - n_sequences)
+#     df = df[:to_drop]
+#     return df
         
